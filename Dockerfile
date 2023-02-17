@@ -1,14 +1,14 @@
-FROM python:3.6
+FROM python:3.9.6-slim
 
-ENV FLASK_APP manage.py
 
-COPY manage.py .
-COPY app app
 
-RUN pip install -r requirements.txt
-RUN pip install gunicorn
-# RUN pip install email_validator
-# RUN pip install mysqlclient
+WORKDIR /app
 
-EXPOSE 8001
-CMD ["gunicorn", "--config", "gunicorn-cfg.py", "manage:app"]
+COPY requirements.txt requirements.txt
+COPY . .
+RUN pip3 install -r requirements.txt
+#  RUN pip3 install Flask
+# ENV FLASK_APP /app
+
+
+CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0"]
